@@ -18,3 +18,28 @@ button {
 a {
 	text-decoration: none;
 }
+
+body {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+div.bar-container {
+	position: relative;
+	width: 30em;
+	height: 4em;
+	background: lightslategray;
+}
+
+div.bar-container div.bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0;
+	height: 100%;
+	background: red;
+	transition: width 0.5s ease;
+}
