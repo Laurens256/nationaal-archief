@@ -40,6 +40,6 @@ div.bar-container div.bar {
 	left: 0;
 	width: 0;
 	height: 100%;
-	background: red;
-	transition: width 0.5s ease;
+	background: blue;
+	transition: width 2s ease-in-out;
 }
