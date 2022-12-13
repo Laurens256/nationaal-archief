@@ -27,6 +27,10 @@ body {
 	align-items: center;
 }
 
+main.visualisation-container.data-error {
+	display: none;
+}
+
 div.bar-container {
 	position: relative;
 	width: 30em;
