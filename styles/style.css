@@ -47,3 +47,7 @@ div.bar-container div.bar {
 	background: blue;
 	transition: width 2s ease-in-out;
 }
+
+main.visualisation-container:not(.data-error) + div.error {
+	display: none;
+}

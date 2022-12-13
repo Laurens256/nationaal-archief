@@ -2,6 +2,7 @@
 // import "../styles/style.css"
 
 const req = new XMLHttpRequest;
+// req.open('GET', 'https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecord');
 req.open('GET', 'https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=2.01.27.01&metadataPrefix=oai_ead');
 // req.open('GET', 'https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=2.05.170&metadataPrefix=oai_ead');
 req.responseType = 'document';
