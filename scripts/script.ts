@@ -2,7 +2,6 @@
 // import "../styles/style.css"
 
 const archiefLink = 'https://www.nationaalarchief.nl/onderzoeken/archief/';
-let loading: boolean = false;
 
 const getArchive = () => {
 	const record: string = selectElement.value;
@@ -25,7 +24,6 @@ const getArchive = () => {
 	};
 
 	req.onerror = () => {
-		loading = false;
 		document.querySelector('main.visualisation-container')!.classList.add('data-error');
 	};
 	req.send();
