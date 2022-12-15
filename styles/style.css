@@ -53,3 +53,33 @@ div.bar-container div.bar {
 main.visualisation-container:not(.data-error) + div.error {
 	display: none;
 }
+
+
+
+div.inputs {
+	display: flex;
+	gap: 2em;
+	align-items: center;
+}
+
+div.inputs select {
+	height: fit-content;
+}
+
+div.inputs div.dates {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+}
+
+div.inputs div.dates label {
+	width: 100%;
+	display: flex;
+	justify-content: end;
+	gap: .3em;
+}
+
+div.inputs div.dates label input {
+	width: 10em;
+	justify-self: end;
+}

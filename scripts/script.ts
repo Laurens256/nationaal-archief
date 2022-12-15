@@ -14,7 +14,6 @@ const getArchive = () => {
 
 	req.onload = () => {
 		if (req.readyState === req.DONE && req.status === 200) {
-			console.log(req.response);
 			if (req.response.getElementsByTagName('error').length > 0) {
 				req.onerror!(req.response);
 				return;
@@ -24,23 +23,30 @@ const getArchive = () => {
 	};
 
 	req.onerror = () => {
+		console.error('error');
 		document.querySelector('main.visualisation-container')!.classList.add('data-error');
 	};
+
 	req.send();
 };
 
+let allFiles: Element[] = [];
+
 const getOnlineFileFraction = (xml: XMLDocument) => {
-	let onlineFileCount: number = 0;
 	// haalt alle bestanden op die een level hebben van 'file', zorgt ervoor dat kopjes en dergelijke niet worden meegenomen (nog navragen)
-	const allFiles: Element[] = Array.from(xml.getElementsByTagName('c')).filter(file => file.getAttribute('level') === 'file');
-	console.log(allFiles);
+	allFiles = Array.from(xml.getElementsByTagName('c')).filter(file => file.getAttribute('level') === 'file');
+
+	let onlineFiles: Element[] = [];
+	let offlineFiles: Element[] = [];
 	allFiles.forEach(file => {
 		const dao = file.getElementsByTagName('dao');
 		if (dao.length > 0) {
-			onlineFileCount++;
+			onlineFiles.push(file);
+		} else {
+			offlineFiles.push(file);
 		}
 	});
-	showVisualisation(onlineFileCount, allFiles);
+	updateVisualisation(onlineFiles.length, allFiles.length);
 };
 
 
@@ -51,19 +57,55 @@ const percentageText: HTMLElement = document.querySelector('.percentage-text')!;
 const fullFraction: HTMLElement = document.querySelector('.full-fraction')!;
 const anchorElement: HTMLAnchorElement = document.querySelector('a')!;
 
-const showVisualisation = (onlineFileCount: number, allFiles: Element[]) => {
-	const percentage: number = parseFloat((onlineFileCount / allFiles.length * 100).toFixed(2));
+const updateVisualisation = (fraction: number, fractionOf: number, timePeriod?: any) => {
+	const percentage: number = parseFloat((fraction / allFiles.length * 100).toFixed(2));
 
 	if (bar && percentageText && mainElement && fullFraction && anchorElement) {
 		bar.style.width = percentage + '%';
 		percentageText.textContent = percentage.toLocaleString() + '%';
-		fullFraction.textContent = `(${onlineFileCount} / ${allFiles.length})`;
+		fullFraction.textContent = `(${fraction} / ${fractionOf})`;
 		anchorElement.setAttribute('href', archiefLink + selectElement.value);
+
+		if (timePeriod) {
+
+		} else {
+			
+		}
 		mainElement.classList.add('data-loaded');
 	}
 };
 
+const filterByYear = () => {
+	const yearFromValue: string = yearFrom.value;
+	const yearToValue: string = yearTo.value;
+	if (!yearFromValue || !yearToValue) return;
+
+	const filteredFiles: Element[] = allFiles.filter(file => {
+		let date: any = file.getElementsByTagName('unitdate');
+		if (date.length > 0) {
+			date = date[0].textContent;
+		}
+		console.log(date);
+		if (date) {
+			// const dateValue: number = parseInt(date.substring(0, 4));
+			return date >= parseInt(yearFromValue) && date <= parseInt(yearToValue);
+		} else {
+			return;
+		}
+	});
+	console.log(filteredFiles);
+
+	console.log(yearFromValue, yearToValue);
+};
+
 const selectElement: HTMLSelectElement = document.querySelector('select')!;
 selectElement.addEventListener('change', getArchive);
+
+const yearFrom: HTMLInputElement = document.querySelector('.dates label:first-of-type input[type="number"]')!;
+const yearTo: HTMLInputElement = document.querySelector('.dates label:last-of-type input[type="number"]')!;
+yearTo.value = new Date().getFullYear().toString();
+
+// yearFrom.addEventListener('change', filterByYear);
+// yearTo.addEventListener('change', filterByYear);
 
 getArchive();
