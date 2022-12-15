@@ -75,37 +75,8 @@ const updateVisualisation = (fraction: number, fractionOf: number, timePeriod?: 
 	}
 };
 
-const filterByYear = () => {
-	const yearFromValue: string = yearFrom.value;
-	const yearToValue: string = yearTo.value;
-	if (!yearFromValue || !yearToValue) return;
-
-	const filteredFiles: Element[] = allFiles.filter(file => {
-		let date: any = file.getElementsByTagName('unitdate');
-		if (date.length > 0) {
-			date = date[0].textContent;
-		}
-		console.log(date);
-		if (date) {
-			// const dateValue: number = parseInt(date.substring(0, 4));
-			return date >= parseInt(yearFromValue) && date <= parseInt(yearToValue);
-		} else {
-			return;
-		}
-	});
-	console.log(filteredFiles);
-
-	console.log(yearFromValue, yearToValue);
-};
 
 const selectElement: HTMLSelectElement = document.querySelector('select')!;
 selectElement.addEventListener('change', getArchive);
-
-const yearFrom: HTMLInputElement = document.querySelector('.dates label:first-of-type input[type="number"]')!;
-const yearTo: HTMLInputElement = document.querySelector('.dates label:last-of-type input[type="number"]')!;
-yearTo.value = new Date().getFullYear().toString();
-
-// yearFrom.addEventListener('change', filterByYear);
-// yearTo.addEventListener('change', filterByYear);
 
 getArchive();
