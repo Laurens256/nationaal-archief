@@ -23,7 +23,8 @@ export const getArchive = () => {
 		}
 	};
 
-	req.onerror = () => document.querySelector('main.visualisation-container')!.classList.add('data-error');
+	req.onerror = () =>
+		document.querySelector('main.visualisation-container')!.classList.add('data-error');
 
 	req.send();
 };
