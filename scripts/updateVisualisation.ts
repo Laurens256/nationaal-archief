@@ -7,11 +7,7 @@ const anchorElement: HTMLAnchorElement = document.querySelector('a')!;
 const selectElement: HTMLSelectElement = document.querySelector('select')!;
 const archiefLink = 'https://www.nationaalarchief.nl/onderzoeken/archief/';
 
-export const updateVisualisation = (
-	fraction: number,
-	fractionOf: number,
-	timePeriod?: any
-) => {
+const updateVisualisation = (fraction: number, fractionOf: number) => {
 	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(2));
 
 	if (bar && percentageText && mainElement && fullFraction && anchorElement) {
@@ -21,9 +17,12 @@ export const updateVisualisation = (
 		anchorElement.setAttribute('href', archiefLink + selectElement.value);
 		anchorElement.textContent = selectElement.value;
 
-		if (timePeriod) {
-		} else {
-		}
 		mainElement.classList.add('data-loaded');
 	}
 };
+
+const errorVisualisation = () => {
+	mainElement.classList.add('data-error');
+};
+
+export { updateVisualisation, errorVisualisation };
