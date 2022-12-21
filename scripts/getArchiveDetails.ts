@@ -2,12 +2,9 @@
 
 const selectElement: HTMLSelectElement = document.querySelector('select')!;
 
-const getArchive = async (): Promise<{
-	onlineFiles: number;
-	allFiles: number;
-}> => {
+const getArchive = async () => {
 	try {
-		const data: { onlineFiles: number; allFiles: number } = await new Promise(
+		const data: { fraction: Element[]; fractionOf: Element[] } = await new Promise(
 			(resolve, reject) => {
 				const record: string = selectElement.value;
 
@@ -37,13 +34,13 @@ const getArchive = async (): Promise<{
 		return data;
 	} catch (error) {
 		console.log(error);
-		return { onlineFiles: 0, allFiles: 0 };
+		return { fraction: [], fractionOf: [] };
 	}
 };
 
 const getOnlineFileFraction = (
 	xml: XMLDocument
-): { onlineFiles: number; allFiles: number } => {
+): { fraction: Element[]; fractionOf: Element[] } => {
 	// haalt alle bestanden op die een level hebben van 'file', zorgt ervoor dat kopjes en dergelijke niet worden meegenomen
 	const allFiles = Array.from(xml.getElementsByTagName('c')).filter(
 		(file) => file.getAttribute('level') === 'file'
@@ -53,17 +50,13 @@ const getOnlineFileFraction = (
 	let offlineFiles: Element[] = [];
 	allFiles.forEach((file) => {
 		const dao = file.getElementsByTagName('dao');
-		// const unitDate = file.getElementsByTagName('unitdate');
-		// if (unitDate.length > 0) {
-		// 	console.log(unitDate[0].textContent);
-		// }
 		if (dao.length > 0) {
 			onlineFiles.push(file);
 		} else {
 			offlineFiles.push(file);
 		}
 	});
-	return { onlineFiles: onlineFiles.length, allFiles: allFiles.length };
+	return { fraction: onlineFiles, fractionOf: allFiles };
 };
 
 export { getArchive };
