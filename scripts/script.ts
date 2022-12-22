@@ -1,6 +1,6 @@
 // dit zorgt voor een flash van unstyled content dus doen we niet
 // import '../styles/style.css'
-import { getArchive } from './getArchiveDetails';
+import { getArchive, getOnlineFileFraction } from './getArchiveDetails';
 import { updateVisualisation, errorVisualisation } from './updateVisualisation';
 import { filterByYear } from './yearFilter';
 
@@ -45,18 +45,24 @@ const changeArchive = async () => {
 };
 
 const chooseYearRange = () => {
-	if(!yearFrom.value || !yearTo.value) return;
+	if (!yearFrom.value || !yearTo.value) return;
 	const startYear = Number(yearFrom.value);
 	const endYear = Number(yearTo.value);
-	console.log('aaa');
-	filterByYear(startYear, endYear, fullDataset);
+	const data = filterByYear(startYear, endYear, fullDataset);
+
+	const datasetByYear = getOnlineFileFraction(data.filteredFiles);
+
+	updateVisualisation(datasetByYear.fraction.length, datasetByYear.fractionOf.length, {
+		startYear: startYear,
+		endYear: endYear
+	});
+	console.log(datasetByYear);
 };
 
 const yearFrom = document.querySelector('label:first-of-type input') as HTMLInputElement;
 const yearTo = document.querySelector('label:last-of-type input') as HTMLInputElement;
 yearFrom.addEventListener('change', chooseYearRange);
 yearTo.addEventListener('change', chooseYearRange);
-
 
 selectElement.addEventListener('change', changeArchive);
 

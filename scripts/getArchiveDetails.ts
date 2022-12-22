@@ -39,12 +39,17 @@ const getArchive = async () => {
 };
 
 const getOnlineFileFraction = (
-	xml: XMLDocument
+	xml: XMLDocument | Element[]
 ): { fraction: Element[]; fractionOf: Element[] } => {
 	// haalt alle bestanden op die een level hebben van 'file', zorgt ervoor dat kopjes en dergelijke niet worden meegenomen
-	const allFiles = Array.from(xml.getElementsByTagName('c')).filter(
-		(file) => file.getAttribute('level') === 'file'
-	);
+	let allFiles;
+	if (Array.isArray(xml)) {
+		allFiles = xml;
+	} else {
+		allFiles = Array.from(xml.getElementsByTagName('c')).filter(
+			(file) => file.getAttribute('level') === 'file'
+		);
+	}
 
 	let onlineFiles: Element[] = [];
 	let offlineFiles: Element[] = [];
@@ -59,4 +64,4 @@ const getOnlineFileFraction = (
 	return { fraction: onlineFiles, fractionOf: allFiles };
 };
 
-export { getArchive };
+export { getArchive, getOnlineFileFraction };
