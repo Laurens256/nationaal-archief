@@ -9,6 +9,11 @@ const archiveEntries = ['1.04.01','1.04.02','2.01.27.01','2.01.27.02','2.01.27.0
 
 const selectElement: HTMLSelectElement = document.querySelector('select')!;
 
+const yearFrom = document.querySelector('label:first-of-type input') as HTMLInputElement;
+const yearTo = document.querySelector('label:last-of-type input') as HTMLInputElement;
+const submitYearFilterBtn = document.querySelector('.submityearfilter') as HTMLButtonElement;
+const clearYearFilterBtn = document.querySelector('.clearyearfilter') as HTMLButtonElement;
+
 let fullDataset: Element[] = [];
 let currentData: { fraction: Element[]; fractionOf: Element[] };
 
@@ -45,7 +50,9 @@ const changeArchive = async () => {
 };
 
 const chooseYearRange = () => {
-	if (!yearFrom.value || !yearTo.value) return;
+	if (!yearFrom.value || !yearTo.value) {
+		return;
+	};
 	const startYear = Number(yearFrom.value);
 	const endYear = Number(yearTo.value);
 	const data = filterByYear(startYear, endYear, fullDataset);
@@ -59,11 +66,15 @@ const chooseYearRange = () => {
 	console.log(datasetByYear);
 };
 
-const yearFrom = document.querySelector('label:first-of-type input') as HTMLInputElement;
-const yearTo = document.querySelector('label:last-of-type input') as HTMLInputElement;
-yearFrom.addEventListener('change', chooseYearRange);
-yearTo.addEventListener('change', chooseYearRange);
+const refreshYears = () => {
+	yearFrom.value = '';
+	yearTo.value = '';
+	updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
+};
+
+submitYearFilterBtn.addEventListener('click', chooseYearRange);
 
 selectElement.addEventListener('change', changeArchive);
+clearYearFilterBtn.addEventListener('click', refreshYears);
 
 init();

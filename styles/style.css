@@ -13,7 +13,11 @@ ol {
 
 button {
 	background: transparent;
-	border: none;
+	border: white solid 2px;
+	color: white;
+	border-radius: 5px;
+	box-sizing: content-box;
+	padding: .5em 1em;
 }
 
 a {
