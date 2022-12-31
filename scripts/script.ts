@@ -76,17 +76,4 @@ const refreshYears = () => {
 selectElement.addEventListener('change', changeArchive);
 clearYearFilterBtn.addEventListener('click', refreshYears);
 
-const testFunction = async () => {
-	const test = await fetch(
-		'https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=1.04.01&metadataPrefix=oai_ead'
-	);
-
-	// parse the xml response
-	const parser = new DOMParser();
-	const xml = parser.parseFromString(await test.text(), 'text/xml');
-
-	console.log(xml);
-};
-
-// testFunction();
 init();
