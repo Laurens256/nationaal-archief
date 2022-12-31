@@ -53,6 +53,7 @@ const chooseYearRange = () => {
 	if (!yearFrom.value || !yearTo.value) {
 		return;
 	};
+  
 	const startYear = Number(yearFrom.value);
 	const endYear = Number(yearTo.value);
 	const data = filterByYear(startYear, endYear, fullDataset);
@@ -72,9 +73,20 @@ const refreshYears = () => {
 	updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
 };
 
-submitYearFilterBtn.addEventListener('click', chooseYearRange);
-
 selectElement.addEventListener('change', changeArchive);
 clearYearFilterBtn.addEventListener('click', refreshYears);
 
+const testFunction = async () => {
+	const test = await fetch(
+		'https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=1.04.01&metadataPrefix=oai_ead'
+	);
+
+	// parse the xml response
+	const parser = new DOMParser();
+	const xml = parser.parseFromString(await test.text(), 'text/xml');
+
+	console.log(xml);
+};
+
+// testFunction();
 init();
