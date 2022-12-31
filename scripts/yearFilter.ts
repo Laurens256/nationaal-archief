@@ -44,4 +44,4 @@ const filterByYear = (startYear: number, endYear: number, dataset: Element[]) =>
 	return { filteredFiles: filteredFiles, exludedFiles: exludedFiles };
 };
 
-export { filterByYear };
+export { getYearsFromString, filterByYear };
