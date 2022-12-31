@@ -1,37 +1,20 @@
-// import { updateVisualisation } from './updateVisualisation';
-
 const selectElement: HTMLSelectElement = document.querySelector('select')!;
 
+const parser = new DOMParser();
+
 const getArchive = async () => {
+	const record: string = selectElement.value;
+
 	try {
-		const data: { fraction: Element[]; fractionOf: Element[] } = await new Promise(
-			(resolve, reject) => {
-				const record: string = selectElement.value;
-
-				const req = new XMLHttpRequest();
-				req.open(
-					'GET',
-					`https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=${record}&metadataPrefix=oai_ead`
-				);
-				req.responseType = 'document';
-				req.overrideMimeType('text/xml');
-
-				req.onload = () => {
-					if (req.readyState === req.DONE && req.status === 200) {
-						if (req.response.getElementsByTagName('error').length > 0) {
-							req.onerror!(req.response);
-						}
-						const filesFraction = getOnlineFileFraction(req.response);
-						resolve(filesFraction);
-					}
-				};
-
-				req.onerror = () => reject(req.response);
-				req.send();
-			}
+		const data = await fetch(
+			`https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=${record}&metadataPrefix=oai_ead`
 		);
+		const xml = parser.parseFromString(await data.text(), 'text/xml');
+		if (xml.getElementsByTagName('error').length > 0) {
+			throw new Error('error while fetching data');
+		}
 
-		return data;
+		return getOnlineFileFraction(xml);
 	} catch (error) {
 		console.log(error);
 		return { fraction: [], fractionOf: [] };
