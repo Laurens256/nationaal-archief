@@ -1,3 +1,5 @@
+import { getYearsFromString } from './yearFilter';
+
 const selectElement: HTMLSelectElement = document.querySelector('select')!;
 
 const parser = new DOMParser();
@@ -9,12 +11,22 @@ const getArchive = async () => {
 		const data = await fetch(
 			`https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=${record}&metadataPrefix=oai_ead`
 		);
-		const xml = parser.parseFromString(await data.text(), 'text/xml');
-		if (xml.getElementsByTagName('error').length > 0) {
+		const dirtyXml = parser.parseFromString(await data.text(), 'text/xml');
+		if (dirtyXml.getElementsByTagName('error').length > 0) {
 			throw new Error('error while fetching data');
 		}
 
-		return getOnlineFileFraction(xml);
+		const xmlFiles: Element[] = Array.from(dirtyXml.getElementsByTagName('c')).filter(
+			(file) => file.getAttribute('level') === 'file'
+		);
+
+		xmlFiles.forEach((file) => {
+			file.setAttribute('minyear', getYearsFromString(file).fileYearStart.toString());
+			file.setAttribute('maxyear', getYearsFromString(file).fileYearEnd.toString());
+		});
+
+		// haal alle files op en bereken deel wat online beschikbaar is
+		return getOnlineFileFraction(xmlFiles);
 	} catch (error) {
 		console.log(error);
 		return { fraction: [], fractionOf: [] };
@@ -22,29 +34,17 @@ const getArchive = async () => {
 };
 
 const getOnlineFileFraction = (
-	xml: XMLDocument | Element[]
+	xml: Element[]
 ): { fraction: Element[]; fractionOf: Element[] } => {
-	// haalt alle bestanden op die een level hebben van 'file', zorgt ervoor dat kopjes en dergelijke niet worden meegenomen
-	let allFiles;
-	if (Array.isArray(xml)) {
-		allFiles = xml;
-	} else {
-		allFiles = Array.from(xml.getElementsByTagName('c')).filter(
-			(file) => file.getAttribute('level') === 'file'
-		);
-	}
-
 	let onlineFiles: Element[] = [];
-	let offlineFiles: Element[] = [];
-	allFiles.forEach((file) => {
+
+	xml.forEach((file) => {
 		const dao = file.getElementsByTagName('dao');
 		if (dao.length > 0) {
 			onlineFiles.push(file);
-		} else {
-			offlineFiles.push(file);
 		}
 	});
-	return { fraction: onlineFiles, fractionOf: allFiles };
+	return { fraction: onlineFiles, fractionOf: xml };
 };
 
 export { getArchive, getOnlineFileFraction };

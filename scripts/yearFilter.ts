@@ -2,7 +2,7 @@
 const regex = /\d{4}/g;
 
 const getYearsFromString = (file: Element) => {
-	// haalt door middle van regexp het hoogste en laatste jaartal op uit unitdate
+	// haalt door middel van regexp het hoogste en laatste jaartal op uit unitdate
 	const unitDate = file.getElementsByTagName('unitdate');
 	let fileYearStart: number = NaN;
 	let fileYearEnd: number = NaN;
@@ -26,7 +26,11 @@ const getYearsFromString = (file: Element) => {
 	return { fileYearStart: fileYearStart, fileYearEnd: fileYearEnd };
 };
 
-const filterByYear = (startYear: number, endYear: number, dataset: Element[]) => {
+const filterByYear = (
+	startYear: number,
+	endYear: number,
+	dataset: Element[]
+): Element[] => {
 	// filteredfiles is een array van alle files die binnen de range vallen
 	const filteredFiles: Element[] = [];
 	// excludedfiles zijn alle files die geen datum hebben of waarvan de datum niet gevonden kan worden (vanwege aparte formatting)
@@ -41,7 +45,17 @@ const filterByYear = (startYear: number, endYear: number, dataset: Element[]) =>
 			filteredFiles.push(file);
 		}
 	});
-	return { filteredFiles: filteredFiles, exludedFiles: exludedFiles };
+	return filteredFiles;
 };
 
-export { getYearsFromString, filterByYear };
+const getUndated = (files: Element[]): number => {
+	let undated = 0;
+	files.forEach((file) => {
+		const minYear = file.getAttribute('minyear');
+		const maxYear = file.getAttribute('maxyear');
+		if (minYear === 'NaN' || maxYear === 'NaN') undated++;
+	});
+	return undated;
+};
+
+export { getYearsFromString, filterByYear, getUndated };
