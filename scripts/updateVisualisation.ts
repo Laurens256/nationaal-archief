@@ -14,9 +14,11 @@ const updateVisualisation = (
 	fractionOf: number,
 	yearRange?: { startYear: number; endYear: number }
 ) => {
-	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(2));
+	console.log(fractionOf, fraction);
+	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(2)) || 0;
 
 	if (bar && percentageText && mainElement && fullFraction && anchorElement) {
+		console.log(percentage);
 		bar.style.width = percentage + '%';
 		percentageText.textContent = percentage.toLocaleString() + '%';
 		fullFraction.textContent = `(${fraction} / ${fractionOf})`;
@@ -25,7 +27,7 @@ const updateVisualisation = (
 
 		if (yearRangeText && yearRange) {
 			yearRangeText.textContent = ` tussen ${yearRange.startYear} - ${yearRange.endYear}`;
-		} else if(yearRangeText) {
+		} else if (yearRangeText) {
 			yearRangeText.textContent = '';
 		}
 
