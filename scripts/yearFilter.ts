@@ -8,16 +8,16 @@ const getYearsFromString = (file: Element) => {
 	let fileYearEnd: number = NaN;
 
 	if (unitDate.length > 0) {
-		let n: number | RegExpExecArray | null;
+		let n: number | RegExpExecArray | null = NaN;
 
 		if (unitDate[0].textContent) {
 			// zolang er regex matches zijn, blijf met checken of ze hoger of lager zijn dan huidige start en end
 			while ((n = regex.exec(unitDate[0].textContent)) !== null) {
 				n = Number(n[0]);
-				if (n < fileYearStart || !fileYearStart) {
+				if (n < fileYearStart || isNaN(fileYearStart)) {
 					fileYearStart = Number(n);
 				}
-				if (n > fileYearEnd || !fileYearEnd) {
+				if (n > fileYearEnd || isNaN(fileYearEnd)) {
 					fileYearEnd = Number(n);
 				}
 			}

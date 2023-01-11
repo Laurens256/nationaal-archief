@@ -1,25 +1,27 @@
 import { getYearsFromString } from './yearFilter';
 
-const selectElement: HTMLSelectElement = document.querySelector('select')!;
-
-const parser = new DOMParser();
-
-const getArchive = async () => {
-	const record: string = selectElement.value;
-
+const getArchiveData = async (
+	archiveId: string
+): Promise<{
+	fraction: Element[];
+	fractionOf: Element[];
+}> => {
 	try {
+		const parser = new DOMParser();
 		const data = await fetch(
-			`https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=${record}&metadataPrefix=oai_ead`
+			`https://service.archief.nl/gaf/oai/!open_oai.OAIHandler?verb=ListRecords&set=${archiveId}&metadataPrefix=oai_ead`
 		);
 		const dirtyXml = parser.parseFromString(await data.text(), 'text/xml');
 		if (dirtyXml.getElementsByTagName('error').length > 0) {
 			throw new Error('error while fetching data');
 		}
 
+		// haal alle files c level tags op (files)
 		const xmlFiles: Element[] = Array.from(dirtyXml.getElementsByTagName('c')).filter(
 			(file) => file.getAttribute('level') === 'file'
 		);
 
+		// voeg min en max jaar toe aan alle files
 		xmlFiles.forEach((file) => {
 			file.setAttribute('minyear', getYearsFromString(file).fileYearStart.toString());
 			file.setAttribute('maxyear', getYearsFromString(file).fileYearEnd.toString());
@@ -47,4 +49,4 @@ const getOnlineFileFraction = (
 	return { fraction: onlineFiles, fractionOf: xml };
 };
 
-export { getArchive, getOnlineFileFraction };
+export { getArchiveData, getOnlineFileFraction };

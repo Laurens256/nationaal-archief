@@ -17,12 +17,21 @@ button {
 	color: white;
 	border-radius: 5px;
 	box-sizing: content-box;
-	padding: .5em 1em;
+	padding: 0.5em 1em;
 }
 
 a {
 	text-decoration: none;
 	color: lightgreen;
+}
+
+a:hover,
+a:focus-visible {
+	text-decoration: underline;
+}
+
+a.current {
+	color: white;
 }
 
 body {
@@ -60,4 +69,11 @@ div.bar-container div.bar {
 
 main.visualisation-container:not(.data-error) + div.error {
 	display: none;
+}
+
+.linksection {
+	display: flex;
+	flex-direction: column;
+	height: 10em;
+	overflow: auto;
 }
