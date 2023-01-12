@@ -46,7 +46,7 @@ body {
 	color: white;
 }
 
-main.visualisation-container.data-error {
+section.visualisation-container.data-error {
 	display: none;
 }
 
@@ -57,7 +57,7 @@ div.bar-container {
 	background: lightslategray;
 }
 
-div.bar-container div.bar {
+div.bar-container div.online-progress-bar {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -67,7 +67,7 @@ div.bar-container div.bar {
 	transition: width 2s ease-in-out;
 }
 
-main.visualisation-container:not(.data-error) + div.error {
+section.visualisation-container:not(.data-error) + div.error {
 	display: none;
 }
 

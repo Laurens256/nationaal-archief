@@ -1,12 +1,14 @@
-const mainElement: HTMLElement = document.querySelector('main.visualisation-container')!;
-const bar: HTMLElement = document.querySelector('.bar')!;
+const visualisationContainer: HTMLElement = document.querySelector(
+	'section.visualisation-container'
+)!;
+const onlineProgressBar: HTMLElement = document.querySelector('.online-progress-bar')!;
 const percentageText: HTMLElement = document.querySelector('.percentage-text')!;
-const fullFraction: HTMLElement = document.querySelector('.full-fraction')!;
+const writtenFraction: HTMLElement = document.querySelector('.full-fraction')!;
 const linkToArchive: HTMLAnchorElement = document.querySelector('.archivelink')!;
 
 const yearRangeText = document.querySelector('.yearrange') as HTMLElement;
 
-const archiefLink = 'https://www.nationaalarchief.nl/onderzoeken/archief/';
+const archiveLink = 'https://www.nationaalarchief.nl/onderzoeken/archief/';
 
 const updateVisualisation = (
 	fraction: number,
@@ -17,11 +19,17 @@ const updateVisualisation = (
 	// berekent online percentage, 0 als er geen files zijn of iets anders fout gaat
 	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(2)) || 0;
 
-	if (bar && percentageText && mainElement && fullFraction && linkToArchive) {
-		bar.style.width = percentage + '%';
+	if (
+		onlineProgressBar &&
+		percentageText &&
+		visualisationContainer &&
+		writtenFraction &&
+		linkToArchive
+	) {
+		onlineProgressBar.style.width = percentage + '%';
 		percentageText.textContent = percentage.toLocaleString() + '%';
-		fullFraction.textContent = `(${fraction} / ${fractionOf})`;
-		linkToArchive.setAttribute('href', archiefLink + archiveId);
+		writtenFraction.textContent = `(${fraction} / ${fractionOf})`;
+		linkToArchive.setAttribute('href', archiveLink + archiveId);
 		linkToArchive.textContent = archiveId;
 
 		if (yearRangeText && yearRange) {
@@ -30,12 +38,12 @@ const updateVisualisation = (
 			yearRangeText.textContent = '';
 		}
 
-		mainElement.classList.add('data-loaded');
+		visualisationContainer.classList.add('data-loaded');
 	}
 };
 
 const errorVisualisation = () => {
-	mainElement.classList.add('data-error');
+	visualisationContainer.classList.add('data-error');
 };
 
 export { updateVisualisation, errorVisualisation };
