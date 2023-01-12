@@ -6,6 +6,10 @@
 	padding: 0;
 }
 
+:root {
+	--archiefBlauw: 1, 104, 155;
+}
+
 ul,
 ol {
 	list-style: none;
@@ -20,7 +24,7 @@ button {
 	padding: 0.5em 1em;
 }
 
-a {
+div a {
 	text-decoration: none;
 	color: lightgreen;
 }
@@ -32,6 +36,10 @@ a:focus-visible {
 
 a.current {
 	color: white;
+}
+
+section.visualisation-container p {
+	color: rgb(var(--archiefBlauw));
 }
 
 body {
@@ -54,17 +62,40 @@ div.bar-container {
 	position: relative;
 	width: 30em;
 	height: 4em;
-	background: lightslategray;
+}
+
+div.bar-container div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.2em;
+	overflow: hidden;
 }
 
 div.bar-container div.online-progress-bar {
 	position: absolute;
-	top: 0;
 	left: 0;
 	width: 0;
 	height: 100%;
-	background: blue;
+	background: rgb(var(--archiefBlauw));
 	transition: width 2s ease-in-out;
+}
+
+div.bar-container div.offline-progress-bar {
+	background: rgba(var(--archiefBlauw), .4);
+	left: 0;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	transform-origin: left;
+	transition: all 2s ease-in-out;
+}
+
+div.bar-container div span.icon {
+	height: 12px;
+	width: 14px;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 
 section.visualisation-container:not(.data-error) + div.error {
@@ -76,4 +107,12 @@ section.visualisation-container:not(.data-error) + div.error {
 	flex-direction: column;
 	height: 10em;
 	overflow: auto;
+}
+
+div.bar-container div.online-progress-bar span.icon {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20576%20512%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22576%22%20height%3D%22512%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20stroke%3D%22transparent%22%20stroke-width%3D%220%22%20style%3D%22%22%20d%3D%22M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z%22%20%2F%3E%3C%2Fsvg%3E');
+}
+
+div.bar-container div.offline-progress-bar span.icon {
+	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%2039%2032%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%2239%22%20height%3D%2232%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20stroke%3D%22transparent%22%20stroke-width%3D%220%22%20style%3D%22%22%20d%3D%22M23.882 12.097v3.377c0 .873-.714 1.587-1.587 1.587h-6.549a1.591 1.591 0 0 1-1.586-1.587v-3.377H1.635v19.042h34.353V12.097H23.882zm14.457-10.51C38.34.713 37.69 0 36.893 0H1.446C.651 0 0 .714 0 1.586v7.6h38.34v-7.6z%22%20%2F%3E%3C%2Fsvg%3E');
 }
