@@ -78,9 +78,8 @@ const setMinMaxYears = (data: Element[]) => {
 };
 
 const chooseYearRange = () => {
-	if (
-		!yearFromInput.value ||
-		!yearToInput.value ||
+	if (yearFromInput.value || yearToInput.value) {
+	} else if (
 		Number(yearFromInput.value) > Number(yearToInput.value) ||
 		Number(yearFromInput.value) < Number(yearFromInput.min) ||
 		Number(yearToInput.value) < Number(yearFromInput.min) ||
@@ -90,8 +89,8 @@ const chooseYearRange = () => {
 		return;
 	}
 
-	const startYear = Number(yearFromInput.value);
-	const endYear = Number(yearToInput.value);
+	const startYear = Number(yearFromInput.value) || Number(yearToInput.value);
+	const endYear = Number(yearToInput.value) || Number(yearFromInput.value);
 	const filteredFiles = filterByYear(startYear, endYear, fullDataset);
 
 	const onlineFilteredFiles = getOnlineFileFraction(filteredFiles);

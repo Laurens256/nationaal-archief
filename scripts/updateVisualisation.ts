@@ -17,7 +17,7 @@ const yearRangeText = document.querySelector('.yearrange') as HTMLElement;
 const updateVisualisation = (
 	fraction: number,
 	fractionOf: number,
-	yearRange?: { startYear: number; endYear: number }
+	yearRange?: { startYear: number, endYear: number }
 ) => {
 	// berekent online percentage, 0 als er geen files zijn of iets anders fout gaat
 	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(2)) || 0;
@@ -53,7 +53,11 @@ const updateVisualisation = (
 		}
 
 		if (yearRangeText && yearRange) {
-			yearRangeText.textContent = ` tussen ${yearRange.startYear} - ${yearRange.endYear}`;
+			if (yearRange.startYear === yearRange.endYear) {
+				yearRangeText.textContent = ` uit ${yearRange.startYear}`;
+			} else {
+				yearRangeText.textContent = ` tussen ${yearRange.startYear} - ${yearRange.endYear}`;
+			}
 		} else if (yearRangeText) {
 			yearRangeText.textContent = '';
 		}
