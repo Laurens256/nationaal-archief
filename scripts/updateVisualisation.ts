@@ -35,10 +35,21 @@ const updateVisualisation = (
 		percentageText.textContent = percentage.toLocaleString() + '%';
 		writtenFraction.textContent = `(${fraction} / ${fractionOf})`;
 
+		onlineProgressBar.classList.remove('textlabel', 'iconlabel');
+		offlineProgressBar.classList.remove('textlabel', 'iconlabel');
 		if (percentage < 35) {
-			onlineProgressBarLabel.textContent = '';
+			offlineProgressBar.classList.add('textlabel');
+			if (percentage > 5) {
+				onlineProgressBar.classList.add('iconlabel');
+			}
 		} else if (percentage > 65) {
-			offlineProgressBarLabel.textContent = '';
+			onlineProgressBar.classList.add('textlabel');
+			if (percentage < 95) {
+				offlineProgressBar.classList.add('iconlabel');
+			}
+		} else {
+			onlineProgressBar.classList.add('textlabel');
+			offlineProgressBar.classList.add('textlabel');
 		}
 
 		if (yearRangeText && yearRange) {

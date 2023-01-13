@@ -72,6 +72,18 @@ div.bar-container div {
 	overflow: hidden;
 }
 
+div.bar-container div span {
+	display: none;
+}
+
+div.bar-container div.textlabel span {
+	display: initial;
+}
+
+div.bar-container div.iconlabel span:first-of-type {
+	display: initial;
+}
+
 div.bar-container div.online-progress-bar {
 	position: absolute;
 	left: 0;
