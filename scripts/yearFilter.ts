@@ -37,9 +37,28 @@ const filterByYear = (
 	const exludedFiles: Element[] = [];
 
 	dataset.forEach((file) => {
-		const fileYearStart = getYearsFromString(file).fileYearStart;
-		const fileYearEnd = getYearsFromString(file).fileYearEnd;
-		if (Number.isNaN(fileYearEnd) || Number.isNaN(fileYearStart)) {
+		const fileYearStart = Number(file.getAttribute('minyear'));
+		const fileYearEnd = Number(file.getAttribute('maxyear'));
+
+		// code voor wanneer unitdates in ISO-8601 formaat staan
+		// const unitDate = file
+		// .getElementsByTagName('unitdate')[0]
+		// ?.textContent?.replace(/\*/g, '');
+
+		// let fileYearEnd: number = NaN;
+		// let fileYearStart: number = NaN;
+
+		// if (unitDate) {
+		// 	try {
+		// 		fileYearStart = Number(JSON.parse(unitDate)['lte'].split('-')[0]);
+		// 		fileYearEnd = Number(JSON.parse(unitDate)['gte'].split('-')[0]);
+		// 	} catch {
+		// 		fileYearStart = Number(unitDate?.split('T')[0]);
+		// 		fileYearEnd = Number(unitDate?.split('T')[0]);
+		// 	}
+		// }
+
+		if (isNaN(fileYearEnd) || isNaN(fileYearStart)) {
 			exludedFiles.push(file);
 		} else if (fileYearStart >= startYear && fileYearEnd <= endYear) {
 			filteredFiles.push(file);
