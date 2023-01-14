@@ -27,7 +27,6 @@ const updateVisualisation = (
 	) {
 		onlineProgressBar.style.width = percentage + '%';
 		offlineProgressBar.style.width = 100 - percentage + '%';
-		offlineProgressBar.style.left = percentage + '%';
 		percentageText.textContent = percentage.toLocaleString() + '%';
 		writtenFraction.textContent = `(${fraction} / ${fractionOf})`;
 

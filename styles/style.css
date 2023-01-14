@@ -113,11 +113,10 @@ div.bar-container div.online-progress-bar {
 
 div.bar-container div.offline-progress-bar {
 	background: rgba(1, 104, 155, .4);
-	left: 0;
+	right: 0;
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	transform-origin: left;
 	transition: all 2s ease-in-out;
 }
 
@@ -145,4 +144,11 @@ div.bar-container div.online-progress-bar span.icon {
 
 div.bar-container div.offline-progress-bar span.icon {
 	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%2039%2032%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%2239%22%20height%3D%2232%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20stroke%3D%22transparent%22%20stroke-width%3D%220%22%20style%3D%22%22%20d%3D%22M23.882 12.097v3.377c0 .873-.714 1.587-1.587 1.587h-6.549a1.591 1.591 0 0 1-1.586-1.587v-3.377H1.635v19.042h34.353V12.097H23.882zm14.457-10.51C38.34.713 37.69 0 36.893 0H1.446C.651 0 0 .714 0 1.586v7.6h38.34v-7.6z%22%20%2F%3E%3C%2Fsvg%3E');
+}
+
+/* prefers reduces motion media query */
+@media (prefers-reduced-motion: reduce) {
+	div.bar-container div {
+		transition: none !important;
+	}
 }
