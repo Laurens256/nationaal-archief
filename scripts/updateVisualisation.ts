@@ -2,13 +2,9 @@ const visualisationContainer: HTMLElement = document.querySelector(
 	'section.visualisation-container'
 )!;
 const onlineProgressBar: HTMLElement = document.querySelector('.online-progress-bar')!;
-const onlineProgressBarLabel: HTMLElement = document.querySelector(
-	'.online-progress-bar span:last-of-type'
-)!;
+
 const offlineProgressBar: HTMLElement = document.querySelector('.offline-progress-bar')!;
-const offlineProgressBarLabel: HTMLElement = document.querySelector(
-	'.offline-progress-bar span:last-of-type'
-)!;
+
 const percentageText: HTMLElement = document.querySelector('.percentage-text')!;
 const writtenFraction: HTMLElement = document.querySelector('.full-fraction')!;
 

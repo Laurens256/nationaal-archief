@@ -14,7 +14,7 @@
 		<section class="visualisation-container">
 			<p>
 				<span class="percentage-text">0%</span>
-				van dit archief<span class="yearrange"></span> is digitaal beschikbaar
+				van dit archief<span class="yearrange"></span> is online beschikbaar
 				<span class="full-fraction">(0 / 0)</span>
 			</p>
 			<div class="bar-container">
@@ -33,16 +33,18 @@
 		</div>
 
 		<div>
-			<label
-				>Vanaf
-				<input type="number" name="vanaf" min="0" max="0" />
-			</label>
-			<label
-				>Tot
-				<input type="number" name="tot" min="0" max="0" />
-			</label>
-			<button class="submityearfilter">Submit</button>
-			<button class="clearyearfilter">Refresh</button>
+			<form action="">
+				<label
+					>Vanaf
+					<input type="number" name="vanaf" min="0" max="0" />
+				</label>
+				<label
+					>Tot
+					<input type="number" name="tot" min="0" max="0" />
+				</label>
+				<button type="submit">Submit</button>
+				<button class="clearyearfilter">Refresh</button>
+			</form>
 			<p>Min jaar: <span class="minyear"></span></p>
 			<p>Max jaar: <span class="maxyear"></span></p>
 			<p>Ongedateerd: <span class="undatedcounter"></span></p>

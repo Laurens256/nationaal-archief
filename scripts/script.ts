@@ -18,11 +18,11 @@ const minYearSpan: HTMLSpanElement = document.querySelector('.minyear')!;
 const maxYearSpan: HTMLSpanElement = document.querySelector('.maxyear')!;
 const undatedSpan: HTMLSpanElement = document.querySelector('.undatedcounter')!;
 
+const yearFilterForm: HTMLFormElement = document.querySelector('form')!;
 const yearFromInput: HTMLInputElement = document.querySelector(
 	'label:first-of-type input'
 )!;
 const yearToInput: HTMLInputElement = document.querySelector('label:last-of-type input')!;
-const submitYearFilter: HTMLButtonElement = document.querySelector('.submityearfilter')!;
 const clearYearFilter: HTMLButtonElement = document.querySelector('.clearyearfilter')!;
 
 const linkSection = document.querySelector('.linksection') as HTMLButtonElement;
@@ -75,7 +75,8 @@ const setMinMaxYears = (data: Element[]) => {
 	}
 };
 
-const chooseYearRange = () => {
+const chooseYearRange = (e: SubmitEvent) => {
+	e.preventDefault()
 	if (yearFromInput.value && yearToInput.value) {
 		if (Number(yearFromInput.value) > Number(yearToInput.value)) {
 			return;
@@ -122,7 +123,8 @@ const refreshYears = () => {
 	updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
 };
 
-submitYearFilter.addEventListener('click', chooseYearRange);
+
+yearFilterForm.addEventListener('submit', chooseYearRange);
 clearYearFilter.addEventListener('click', refreshYears);
 
 getArchive();
