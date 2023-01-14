@@ -70,9 +70,27 @@ const filterByYear = (
 const getUndated = (files: Element[]): number => {
 	let undated = 0;
 	files.forEach((file) => {
-		const minYear = file.getAttribute('minyear');
-		const maxYear = file.getAttribute('maxyear');
-		if (minYear === 'NaN' || maxYear === 'NaN') undated++;
+		// code voor wanneer unitdates in ISO-8601 formaat staan
+		// const unitDate = file
+		// .getElementsByTagName('unitdate')[0]
+		// ?.textContent?.replace(/\*/g, '');
+
+		// let minYear: number = NaN;
+		// let maxYear: number = NaN;
+
+		// if (unitDate) {
+		// 	try {
+		// 		fileYearStart = Number(JSON.parse(unitDate)['lte'].split('-')[0]);
+		// 		fileYearEnd = Number(JSON.parse(unitDate)['gte'].split('-')[0]);
+		// 	} catch {
+		// 		fileYearStart = Number(unitDate?.split('T')[0]);
+		// 		fileYearEnd = Number(unitDate?.split('T')[0]);
+		// 	}
+		// }
+
+		const minYear = Number(file.getAttribute('minyear'));
+		const maxYear = Number(file.getAttribute('maxyear'));
+		if (isNaN(minYear) || isNaN(maxYear)) undated++;
 	});
 	return undated;
 };
