@@ -27,7 +27,6 @@ const clearYearFilter: HTMLButtonElement = document.querySelector('.clearyearfil
 
 const linkSection = document.querySelector('.linksection') as HTMLButtonElement;
 
-let fullDataset: Element[] = [];
 let currentData: { fraction: Element[]; fractionOf: Element[] };
 
 archiveEntries.forEach((entry) => {
@@ -45,11 +44,10 @@ const getArchive = async () => {
 	if (currentData.fraction.length === 0 && currentData.fractionOf.length === 0) {
 		errorVisualisation();
 	} else {
-		fullDataset = currentData.fractionOf;
 		setMinMaxYears(currentData.fractionOf);
 		updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
 
-		undatedSpan.textContent = getUndated(fullDataset).toString();
+		undatedSpan.textContent = getUndated(currentData.fractionOf).toString();
 	}
 };
 
@@ -78,20 +76,33 @@ const setMinMaxYears = (data: Element[]) => {
 };
 
 const chooseYearRange = () => {
-	if (yearFromInput.value || yearToInput.value) {
-	} else if (
-		Number(yearFromInput.value) > Number(yearToInput.value) ||
-		Number(yearFromInput.value) < Number(yearFromInput.min) ||
-		Number(yearToInput.value) < Number(yearFromInput.min) ||
-		Number(yearFromInput.value) > Number(yearFromInput.max) ||
-		Number(yearToInput.value) > Number(yearFromInput.max)
-	) {
-		return;
+	if (yearFromInput.value && yearToInput.value) {
+		if (Number(yearFromInput.value) > Number(yearToInput.value)) {
+			return;
+		}
+	}
+
+	if (yearFromInput.value) {
+		if (
+			Number(yearFromInput.value) < Number(yearFromInput.min) ||
+			Number(yearFromInput.value) > Number(yearFromInput.max)
+		) {
+			return;
+		}
+	}
+
+	if (yearToInput.value) {
+		if (
+			Number(yearToInput.value) < Number(yearToInput.min) ||
+			Number(yearToInput.value) > Number(yearToInput.max)
+		) {
+			return;
+		}
 	}
 
 	const startYear = Number(yearFromInput.value) || Number(yearToInput.value);
 	const endYear = Number(yearToInput.value) || Number(yearFromInput.value);
-	const filteredFiles = filterByYear(startYear, endYear, fullDataset);
+	const filteredFiles = filterByYear(startYear, endYear, currentData.fractionOf);
 
 	const onlineFilteredFiles = getOnlineFileFraction(filteredFiles);
 
