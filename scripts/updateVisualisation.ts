@@ -16,7 +16,7 @@ const updateVisualisation = (
 	yearRange?: { startYear: number, endYear: number }
 ) => {
 	// berekent online percentage, 0 als er geen files zijn of iets anders fout gaat
-	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(2)) || 0;
+	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(0)) || 0;
 
 	if (
 		onlineProgressBar &&

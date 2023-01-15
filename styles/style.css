@@ -40,6 +40,18 @@ button {
 	padding: 0.5em 1em;
 }
 
+body {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 3em;
+	font-family: 'Fedra Sans';
+	font-weight: 600;
+}
+
 div a {
 	text-decoration: none;
 	color: var(--archiefBlauw);
@@ -55,20 +67,40 @@ a.current {
 	text-decoration: underline;
 }
 
-section.visualisation-container p {
+section.visualisation-container > p {
 	color: var(--archiefBlauw);
 }
 
-body {
-	width: 100vw;
-	height: 100vh;
+section.visualisation-container > p:first-of-type {
+	height: 2.5em;
+}
+
+section.visualisation-container > p:nth-of-type(2) {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	gap: 3em;
-	font-family: 'Fedra Sans';
-	font-weight: 600;
+	align-items: flex-end;
+	height: 2.5em;
+}
+
+section.visualisation-container > p:nth-of-type(2)::after {
+	overflow: hidden;
+	animation: ellipsis steps(4, end) 1s infinite;
+	content: '\2026';
+	width: 0;
+}
+
+@keyframes ellipsis {
+	to {
+		width: 1.1em;
+	}
+}
+
+section.visualisation-container.data-loaded > p:nth-of-type(2),
+section.visualisation-container:not(.data-loaded) > p:first-of-type {
+	display: none;
+}
+
+section.visualisation-container span.percentage-text {
+	font-size: 2em;
 }
 
 section.visualisation-container.data-error {
@@ -112,7 +144,7 @@ div.bar-container div.online-progress-bar {
 }
 
 div.bar-container div.offline-progress-bar {
-	background: rgba(1, 104, 155, .4);
+	background: rgba(1, 104, 155, 0.4);
 	right: 0;
 	height: 100%;
 	width: 100%;
