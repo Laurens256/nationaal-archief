@@ -34,17 +34,15 @@
 		</div>
 
 		<div>
-			<form action="">
-				<label
-					>Vanaf
-					<input type="number" name="vanaf" min="0" max="0" />
-				</label>
-				<label
-					>Tot
-					<input type="number" name="tot" min="0" max="0" />
-				</label>
-				<button type="submit">Submit</button>
-				<button class="clearyearfilter">Refresh</button>
+			<form class="year-filter-form">
+				<label for="year-filter"
+					>Benieuwd naar de digitale beschikbaarheid binnen een specifiek jaar of
+					periode?</label>
+				<div>
+					<input id="year-filter" type="text" name="jaar filter" autocomplete="off" placeholder="Bijv: &quot;1600-1700&quot;"/>
+					<button type="submit">S</button>
+					<button class="clearyearfilter">R</button>
+				</div>
 			</form>
 			<p>Min jaar: <span class="minyear"></span></p>
 			<p>Max jaar: <span class="maxyear"></span></p>

@@ -38,10 +38,6 @@ const filterByYear = (
 		const fileYearStart = Number(file.getAttribute('minyear'));
 		const fileYearEnd = Number(file.getAttribute('maxyear'));
 
-		if (fileYearStart === 1596) {
-			console.log(fileYearStart, file);
-		}
-
 		// code voor wanneer unitdates in ISO-8601 formaat staan
 		// const unitDate = file
 		// .getElementsByTagName('unitdate')[0]

@@ -47,7 +47,6 @@ body {
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	gap: 3em;
 	font-family: 'Fedra Sans';
 	font-weight: 600;
 }
@@ -157,6 +156,20 @@ div.bar-container div span.icon {
 	width: 14px;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+
+
+/* ------------------ 
+year filter form
+------------------ */
+.year-filter-form {
+	/* background: pink; */
+	width: 30em;
+	padding: 2em;
+}
+
+.year-filter-form label {
+	font-family: 'Fedra Sans Bold';
 }
 
 section.visualisation-container:not(.data-error) + div.error {

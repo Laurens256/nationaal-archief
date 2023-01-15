@@ -19,15 +19,15 @@ const maxYearSpan: HTMLSpanElement = document.querySelector('.maxyear')!;
 const undatedSpan: HTMLSpanElement = document.querySelector('.undatedcounter')!;
 
 const yearFilterForm: HTMLFormElement = document.querySelector('form')!;
-const yearFromInput: HTMLInputElement = document.querySelector(
-	'label:first-of-type input'
+const yearFilterInput: HTMLInputElement = document.querySelector(
+	'.year-filter-form #year-filter'
 )!;
-const yearToInput: HTMLInputElement = document.querySelector('label:last-of-type input')!;
 const clearYearFilter: HTMLButtonElement = document.querySelector('.clearyearfilter')!;
 
 const linkSection = document.querySelector('.linksection') as HTMLButtonElement;
 
 let currentData: { fraction: Element[]; fractionOf: Element[] };
+let archiveYearRange = { min: NaN, max: NaN };
 
 archiveEntries.forEach((entry) => {
 	const anchorElement = document.createElement('a');
@@ -69,41 +69,12 @@ const setMinMaxYears = (data: Element[]) => {
 	if (!isNaN(minYear) && !isNaN(maxYear)) {
 		minYearSpan.textContent = minYear.toString();
 		maxYearSpan.textContent = maxYear.toString();
-		yearFromInput.min = minYear.toString();
-		yearFromInput.max = maxYear.toString();
-		yearToInput.min = minYear.toString();
-		yearToInput.max = maxYear.toString();
+		archiveYearRange.min = minYear;
+		archiveYearRange.max = maxYear;
 	}
 };
 
-const chooseYearRange = (e: SubmitEvent) => {
-	e.preventDefault()
-	if (yearFromInput.value && yearToInput.value) {
-		if (Number(yearFromInput.value) > Number(yearToInput.value)) {
-			return;
-		}
-	}
-
-	if (yearFromInput.value) {
-		if (
-			Number(yearFromInput.value) < Number(yearFromInput.min) ||
-			Number(yearFromInput.value) > Number(yearFromInput.max)
-		) {
-			return;
-		}
-	}
-
-	if (yearToInput.value) {
-		if (
-			Number(yearToInput.value) < Number(yearToInput.min) ||
-			Number(yearToInput.value) > Number(yearToInput.max)
-		) {
-			return;
-		}
-	}
-
-	const startYear = Number(yearFromInput.value) || Number(yearToInput.value);
-	const endYear = Number(yearToInput.value) || Number(yearFromInput.value);
+const chooseYearRange = (startYear: number, endYear: number) => {
 	const filteredFiles = filterByYear(startYear, endYear, currentData.fractionOf);
 
 	const onlineFilteredFiles = getOnlineFileFraction(filteredFiles);
@@ -119,13 +90,58 @@ const chooseYearRange = (e: SubmitEvent) => {
 };
 
 const refreshYears = () => {
-	yearFromInput.value = '';
-	yearToInput.value = '';
+	yearFilterInput.value = '';
 	updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
 };
 
+const validateUserFilter = (e: SubmitEvent) => {
+	e.preventDefault();
 
-yearFilterForm.addEventListener('submit', chooseYearRange);
+	let startYear = NaN;
+	let endYear = NaN;
+	// regex filtert alles behalve 0-9, - / | \ en spatie en vervangt het met een leeg karakter
+	const userInput = yearFilterInput.value.replace(/[^0-9-/|\\ ]/g, '');
+
+	try {
+		startYear = Number(userInput);
+		endYear = Number(userInput);
+		if (isNaN(startYear) || isNaN(endYear)) {
+			throw new Error();
+		}
+	} catch {
+		try {
+			// regex split op - / | \ en spatie en filtert de lege strings eruit
+			const yearArray = userInput.split(/[-/|\\ ]/g).filter((el) => el !== '');
+
+			startYear = Number(yearArray[0]);
+			endYear = Number(yearArray[1]);
+			if (isNaN(startYear) || isNaN(endYear)) {
+				throw new Error();
+			}
+		} catch {
+			console.log('error');
+			return;
+		}
+	}
+
+	if (
+		startYear > endYear ||
+		startYear < archiveYearRange.min ||
+		endYear > archiveYearRange.max ||
+		startYear > archiveYearRange.max ||
+		endYear < archiveYearRange.min
+	) {
+		return;
+	}
+	if (startYear == endYear) {
+		yearFilterInput.value = startYear.toString();
+	} else {
+		yearFilterInput.value = `${startYear}-${endYear}`;
+	}
+	chooseYearRange(startYear, endYear);
+};
+
+yearFilterForm.addEventListener('submit', validateUserFilter);
 clearYearFilter.addEventListener('click', refreshYears);
 
 getArchive();
