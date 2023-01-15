@@ -33,12 +33,14 @@ const filterByYear = (
 ): Element[] => {
 	// filteredfiles is een array van alle files die binnen de range vallen
 	const filteredFiles: Element[] = [];
-	// excludedfiles zijn alle files die geen datum hebben of waarvan de datum niet gevonden kan worden (vanwege aparte formatting)
-	const exludedFiles: Element[] = [];
 
 	dataset.forEach((file) => {
 		const fileYearStart = Number(file.getAttribute('minyear'));
 		const fileYearEnd = Number(file.getAttribute('maxyear'));
+
+		if (fileYearStart === 1596) {
+			console.log(fileYearStart, file);
+		}
 
 		// code voor wanneer unitdates in ISO-8601 formaat staan
 		// const unitDate = file
@@ -58,9 +60,12 @@ const filterByYear = (
 		// 	}
 		// }
 
-		if (isNaN(fileYearEnd) || isNaN(fileYearStart)) {
-			exludedFiles.push(file);
-		} else if (fileYearStart >= startYear && fileYearEnd <= endYear) {
+		if (
+			!isNaN(fileYearStart) &&
+			!isNaN(fileYearEnd) &&
+			fileYearStart <= endYear &&
+			fileYearEnd >= startYear
+		) {
 			filteredFiles.push(file);
 		}
 	});

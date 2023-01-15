@@ -57,6 +57,7 @@ const setMinMaxYears = (data: Element[]) => {
 	data.forEach((file) => {
 		const fileMinYear = Number(file.getAttribute('minyear'));
 		const fileMaxYear = Number(file.getAttribute('maxyear'));
+
 		if (fileMinYear < minYear || isNaN(minYear)) {
 			minYear = fileMinYear;
 		}
