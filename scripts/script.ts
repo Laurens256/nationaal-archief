@@ -33,6 +33,7 @@ archiveEntries.forEach((entry) => {
 	const anchorElement = document.createElement('a');
 	anchorElement.href = `${window.location.pathname}?id=${entry}`;
 	anchorElement.textContent = entry;
+	// regex om alle punten uit archief id weg te halen
 	anchorElement.classList.add(`_${entry.replace(/\./g, '')}`);
 	linkSection.appendChild(anchorElement);
 });
@@ -69,8 +70,13 @@ const setMinMaxYears = (data: Element[]) => {
 	if (!isNaN(minYear) && !isNaN(maxYear)) {
 		minYearSpan.textContent = minYear.toString();
 		maxYearSpan.textContent = maxYear.toString();
-		archiveYearRange.min = minYear;
-		archiveYearRange.max = maxYear;
+		archiveYearRange = { min: minYear, max: maxYear };
+
+		// genereert een random range tussen min en max voor de gein lol
+		const halfRange = Math.round((maxYear - minYear) / 2);
+		yearFilterInput.placeholder = `Bijv: ${Math.floor(
+			Math.random() * (maxYear - halfRange - minYear + 1) + minYear
+		)}-${Math.floor(Math.random() * (maxYear - halfRange - minYear + 1) + minYear + halfRange)}`;
 	}
 };
 
