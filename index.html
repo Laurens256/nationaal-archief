@@ -11,44 +11,49 @@
 	</head>
 
 	<body>
-		<section class="visualisation-container">
-			<p>
-				<span class="percentage-text">0%</span>
-				van dit archief<span class="yearrange"></span> is online beschikbaar
-				<span class="full-fraction">(0 / 0)</span>
-			</p>
-			<p>Archief wordt geladen</p>
-			<div class="bar-container">
-				<div class="online-progress-bar">
-					<span class="icon"></span>
-					<span>Online</span>
-				</div>
-				<div class="offline-progress-bar">
-					<span class="icon"></span>
-					<span>Offline</span>
-				</div>
-			</div>
-		</section>
-		<div class="error">
-			<p>Er is een fout opgetreden bij het laden van de visualisatie.</p>
-		</div>
-
-		<div>
-			<form class="year-filter-form">
-				<label for="year-filter"
-					>Benieuwd naar de digitale beschikbaarheid binnen een specifiek jaar of
-					periode?</label>
+		<div class="year-filter-container">
+			<section class="visualisation-container">
 				<div>
-					<input id="year-filter" type="text" name="jaar filter" autocomplete="off"/>
-					<button type="submit">Submit</button>
-					<button class="clearyearfilter">&#x21bb;</button>
+					<span class="percentage-text">0%</span>
+					<p>
+						van dit archief<span class="chosen-year-range"></span> is online beschikbaar
+						<span class="full-fraction">(0 / 0)</span>
+					</p>
 				</div>
-			</form>
-			<p>Min jaar: <span class="minyear"></span></p>
-			<p>Max jaar: <span class="maxyear"></span></p>
-			<p>Ongedateerd: <span class="undatedcounter"></span></p>
-		</div>
+				<p>Archief wordt geladen</p>
 
+				<div class="bar-container">
+					<div class="online-progress-bar">
+						<span class="icon"></span>
+						<span>Online</span>
+					</div>
+					<div class="offline-progress-bar">
+						<span class="icon"></span>
+						<span>Offline</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="error">
+				<p>Er is een fout opgetreden bij het laden van de visualisatie.</p>
+			</section>
+
+			<section>
+				<form class="year-filter-form">
+					<label for="year-filter"
+						>Kies een periode of jaartal <span class="year-range-label"></span> om de
+						digitale beschikbaarheid uit die periode te tonen.</label
+					>
+					<div>
+						<input id="year-filter" type="text" name="jaar filter" autocomplete="off" />
+						<button type="submit">Filter</button>
+						<button class="clearyearfilter">&#x21bb;</button>
+					</div>
+					<p class="undated-counter">&nbsp;</p>
+				</form>
+				<!-- <p class="undated-counter">&nbsp;</p> -->
+			</section>
+		</div>
 		<div class="linksection"></div>
 	</body>
 </html>

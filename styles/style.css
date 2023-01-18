@@ -24,6 +24,7 @@
 
 :root {
 	--archiefBlauw: rgb(1, 104, 155);
+	--archiefOranje: rgb(225, 112, 0);
 }
 
 ul,
@@ -31,56 +32,61 @@ ol {
 	list-style: none;
 }
 
-button {
-	background: transparent;
-	border: black solid 2px;
-	color: black;
-	border-radius: 5px;
-	box-sizing: content-box;
-	padding: 0.5em 1em;
-}
-
 body {
-	width: 100vw;
 	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-direction: column;
 	font-family: 'Fedra Sans';
 	font-weight: 600;
 }
 
-div a {
-	text-decoration: none;
+/* ------------------ 
+global container
+------------------ */
+div.year-filter-container {
+	height: fit-content;
+	width: 32em;
+	padding: 1em;
+}
+
+/* ------------------ 
+titel met percentage
+------------------ */
+section.visualisation-container > div:first-of-type {
+	display: flex;
+	gap: 0.3em;
+	align-items: flex-end;
+	height: 2.5em;
+	overflow: hidden;
+}
+
+section.visualisation-container > div:first-of-type > p,
+section.visualisation-container > div:first-of-type > span {
 	color: var(--archiefBlauw);
 }
 
-a:hover,
-a:focus-visible {
-	text-decoration: underline;
+section.visualisation-container > div:first-of-type > p {
+	display: inline-block;
 }
 
-a.current {
-	color: #000;
-	text-decoration: underline;
+section.visualisation-container > div:first-of-type span.percentage-text {
+	font-size: 2em;
+	height: 100%;
+	display: inline-block;
+}
+
+section.visualisation-container > div:first-of-type p span.chosen-year-range {
+	font-family: 'Fedra Sans Bold';
 }
 
 section.visualisation-container > p {
-	color: var(--archiefBlauw);
-}
-
-section.visualisation-container > p:first-of-type {
-	height: 2.5em;
-}
-
-section.visualisation-container > p:nth-of-type(2) {
 	display: flex;
 	align-items: flex-end;
 	height: 2.5em;
 }
 
-section.visualisation-container > p:nth-of-type(2)::after {
+section.visualisation-container > p::after {
 	overflow: hidden;
 	animation: ellipsis steps(4, end) 1s infinite;
 	content: '\2026';
@@ -93,22 +99,18 @@ section.visualisation-container > p:nth-of-type(2)::after {
 	}
 }
 
-section.visualisation-container.data-loaded > p:nth-of-type(2),
-section.visualisation-container:not(.data-loaded) > p:first-of-type {
+/* loading tekst en percentage tekst wisseles display none wanneer data is geladen */
+section.visualisation-container.data-loaded > p,
+section.visualisation-container:not(.data-loaded) > div:first-of-type {
 	display: none;
 }
 
-section.visualisation-container span.percentage-text {
-	font-size: 2em;
-}
-
-section.visualisation-container.data-error {
-	display: none;
-}
-
+/* ------------------ 
+visualisatie balken
+------------------ */
 div.bar-container {
 	position: relative;
-	width: 30em;
+	width: 100%;
 	height: 4em;
 	color: white;
 }
@@ -121,6 +123,7 @@ div.bar-container div {
 	overflow: hidden;
 }
 
+/* label binnen 'online' en 'offline' balken/divs */
 div.bar-container div span {
 	display: none;
 }
@@ -148,7 +151,7 @@ div.bar-container div.offline-progress-bar {
 	height: 100%;
 	width: 100%;
 	position: absolute;
-	transition: all 2s ease-in-out;
+	transition: width 2s ease-in-out;
 }
 
 div.bar-container div span.icon {
@@ -158,29 +161,100 @@ div.bar-container div span.icon {
 	background-repeat: no-repeat;
 }
 
-
 /* ------------------ 
 year filter form
 ------------------ */
 .year-filter-form {
-	/* background: pink; */
 	width: 30em;
-	padding: 2em;
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	gap: .3em;
 }
 
-.year-filter-form label {
+.year-filter-form label .year-range-label {
 	font-family: 'Fedra Sans Bold';
 }
 
-section.visualisation-container:not(.data-error) + div.error {
-	display: none;
+.year-filter-form div {
+	width: 100%;
+	display: flex;
+	gap: .2em;
+	height: 2em;
 }
 
-.linksection {
+.year-filter-form div input {
+	width: 100%;
+	border: 2px solid var(--archiefBlauw);
+	border-radius: 0.2em;
+	padding: 0.5em;
+	transition: all .2s ease-in-out;
+}
+
+.year-filter-form div input:focus-visible {
+	transform: scale(1.02);
+}
+
+.year-filter-form div button {
+	padding: 0 1em;
+	width: fit-content;
+	border: 2px solid var(--archiefBlauw);
+	border-radius: 0.2em;
+	background: var(--archiefBlauw);
+	color: white;
+	font-family: 'Fedra Sans Bold';
+	cursor: pointer;
+	transition: all .2s ease-in-out;
+}
+
+.year-filter-form div button:hover {
+	text-decoration: underline;
+	transform: scale(1.04);
+}
+
+.year-filter-form div button:focus-visible {
+	outline: 2px solid var(--archiefOranje);
+}
+
+.year-filter-form p.undated-counter {
+	font-family: 'Fedra Sans Bold';
+	margin-top: .5em;
+}
+
+/* ------------------ 
+link section
+------------------ */
+div.linksection {
 	display: flex;
 	flex-direction: column;
 	height: 10em;
 	overflow: auto;
+}
+
+div.linksection a {
+	text-decoration: none;
+	color: var(--archiefBlauw);
+}
+
+div.linksection a:hover,
+div.linksection a:focus-visible {
+	text-decoration: underline;
+}
+
+div.linksection a.current {
+	color: #000;
+	text-decoration: underline;
+}
+
+/* ------------------ 
+error state
+------------------ */
+section.visualisation-container.data-error {
+	display: none;
+}
+
+section.visualisation-container:not(.data-error) + section.error {
+	display: none;
 }
 
 div.bar-container div.online-progress-bar span.icon {

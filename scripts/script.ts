@@ -14,9 +14,8 @@ if (!archiveId) {
 	window.location.href = `${window.location.pathname}?id=${archiveEntries[0]}`;
 }
 
-const minYearSpan: HTMLSpanElement = document.querySelector('.minyear')!;
-const maxYearSpan: HTMLSpanElement = document.querySelector('.maxyear')!;
-const undatedSpan: HTMLSpanElement = document.querySelector('.undatedcounter')!;
+const undatedSpan: HTMLSpanElement = document.querySelector('.undated-counter')!;
+const maxYearRangeText = document.querySelector('.year-range-label') as HTMLElement;
 
 const yearFilterForm: HTMLFormElement = document.querySelector('form')!;
 const yearFilterInput: HTMLInputElement = document.querySelector(
@@ -29,14 +28,17 @@ const linkSection = document.querySelector('.linksection') as HTMLButtonElement;
 let currentData: { fraction: Element[]; fractionOf: Element[] };
 let archiveYearRange = { min: NaN, max: NaN };
 
-archiveEntries.forEach((entry) => {
-	const anchorElement = document.createElement('a');
-	anchorElement.href = `${window.location.pathname}?id=${entry}`;
-	anchorElement.textContent = entry;
-	// regex om alle punten uit archief id weg te halen
-	anchorElement.classList.add(`_${entry.replace(/\./g, '')}`);
-	linkSection.appendChild(anchorElement);
-});
+const buildArchiveLinks = () => {
+	archiveEntries.forEach((entry) => {
+		const anchorElement = document.createElement('a');
+		anchorElement.href = `${window.location.pathname}?id=${entry}`;
+		anchorElement.textContent = entry;
+		// regex om alle punten uit archief id weg te halen
+		anchorElement.classList.add(`_${entry.replace(/\./g, '')}`);
+		linkSection.appendChild(anchorElement);
+	});
+};
+buildArchiveLinks();
 document.querySelector(`._${archiveId.replace(/\./g, '')}`)?.classList.add('current');
 
 const getArchive = async () => {
@@ -48,7 +50,11 @@ const getArchive = async () => {
 		setMinMaxYears(currentData.fractionOf);
 		updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
 
-		undatedSpan.textContent = getUndated(currentData.fractionOf).toString();
+		maxYearRangeText.textContent = `tussen ${archiveYearRange.min} en ${archiveYearRange.max}`;
+		const undated = getUndated(currentData.fractionOf);
+		if (undated > 0) {
+			undatedSpan.innerHTML = `Let op: <em>${undated.toString()}</em> van de archiefbestanden zijn ongedateerd.`;
+		}
 	}
 };
 
@@ -68,15 +74,15 @@ const setMinMaxYears = (data: Element[]) => {
 	});
 
 	if (!isNaN(minYear) && !isNaN(maxYear)) {
-		minYearSpan.textContent = minYear.toString();
-		maxYearSpan.textContent = maxYear.toString();
 		archiveYearRange = { min: minYear, max: maxYear };
 
 		// genereert een random range tussen min en max voor de gein lol
 		const halfRange = Math.round((maxYear - minYear) / 2);
 		yearFilterInput.placeholder = `Bijv: ${Math.floor(
 			Math.random() * (maxYear - halfRange - minYear + 1) + minYear
-		)}-${Math.floor(Math.random() * (maxYear - halfRange - minYear + 1) + minYear + halfRange)}`;
+		)}-${Math.floor(
+			Math.random() * (maxYear - halfRange - minYear + 1) + minYear + halfRange
+		)}`;
 	}
 };
 

@@ -8,7 +8,7 @@ const offlineProgressBar: HTMLElement = document.querySelector('.offline-progres
 const percentageText: HTMLElement = document.querySelector('.percentage-text')!;
 const writtenFraction: HTMLElement = document.querySelector('.full-fraction')!;
 
-const yearRangeText = document.querySelector('.yearrange') as HTMLElement;
+const yearRangeText = document.querySelector('.chosen-year-range') as HTMLElement;
 
 const updateVisualisation = (
 	fraction: number,
@@ -16,7 +16,7 @@ const updateVisualisation = (
 	yearRange?: { startYear: number, endYear: number }
 ) => {
 	// berekent online percentage, 0 als er geen files zijn of iets anders fout gaat
-	const percentage: number = parseFloat(((fraction / fractionOf) * 100).toFixed(0)) || 0;
+	const percentage: number = Math.floor(((fraction / fractionOf) * 100)) || 0;
 
 	if (
 		onlineProgressBar &&
