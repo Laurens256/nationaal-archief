@@ -50,10 +50,10 @@ const getArchive = async () => {
 		setMinMaxYears(currentData.fractionOf);
 		updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
 
-		maxYearRangeText.textContent = `tussen ${archiveYearRange.min} en ${archiveYearRange.max}`;
+		maxYearRangeText.innerHTML = `tussen <strong>${archiveYearRange.min}</strong> en <strong>${archiveYearRange.max}</strong>`;
 		const undated = getUndated(currentData.fractionOf);
 		if (undated > 0) {
-			undatedSpan.innerHTML = `Let op: <em>${undated.toString()}</em> van de archiefbestanden zijn ongedateerd.`;
+			undatedSpan.innerHTML = `Let op: <strong>${undated.toString()}</strong> van de archiefbestanden zijn ongedateerd.`;
 		}
 	}
 };
@@ -75,14 +75,14 @@ const setMinMaxYears = (data: Element[]) => {
 
 	if (!isNaN(minYear) && !isNaN(maxYear)) {
 		archiveYearRange = { min: minYear, max: maxYear };
-
+		yearFilterInput.placeholder = `Tussen: ${minYear}-${maxYear}`
 		// genereert een random range tussen min en max voor de gein lol
-		const halfRange = Math.round((maxYear - minYear) / 2);
-		yearFilterInput.placeholder = `Bijv: ${Math.floor(
-			Math.random() * (maxYear - halfRange - minYear + 1) + minYear
-		)}-${Math.floor(
-			Math.random() * (maxYear - halfRange - minYear + 1) + minYear + halfRange
-		)}`;
+		// const halfRange = Math.round((maxYear - minYear) / 2);
+		// yearFilterInput.placeholder = `Bijv: ${Math.floor(
+		// 	Math.random() * (maxYear - halfRange - minYear + 1) + minYear
+		// )}-${Math.floor(
+		// 	Math.random() * (maxYear - halfRange - minYear + 1) + minYear + halfRange
+		// )}`;
 	}
 };
 

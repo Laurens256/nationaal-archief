@@ -32,6 +32,10 @@ ol {
 	list-style: none;
 }
 
+strong {
+	font-family: 'Fedra Sans Bold';
+}
+
 body {
 	height: 100vh;
 	display: flex;
@@ -172,10 +176,6 @@ year filter form
 	gap: .3em;
 }
 
-.year-filter-form label .year-range-label {
-	font-family: 'Fedra Sans Bold';
-}
-
 .year-filter-form div {
 	width: 100%;
 	display: flex;
@@ -184,7 +184,7 @@ year filter form
 }
 
 .year-filter-form div input {
-	width: 100%;
+	width: 35%;
 	border: 2px solid var(--archiefBlauw);
 	border-radius: 0.2em;
 	padding: 0.5em;
@@ -217,8 +217,8 @@ year filter form
 }
 
 .year-filter-form p.undated-counter {
-	font-family: 'Fedra Sans Bold';
 	margin-top: .5em;
+	font-family: 'Fedra Sans Italic';
 }
 
 /* ------------------ 
