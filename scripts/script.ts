@@ -88,9 +88,9 @@ const setMinMaxYears = (data: Element[]) => {
 
 const chooseYearRange = (startYear: number, endYear: number) => {
 	const filteredFiles = filterByYear(startYear, endYear, currentData.fractionOf);
-
 	const onlineFilteredFiles = getOnlineFileFraction(filteredFiles);
 
+	clearYearFilter.classList.add('active');
 	updateVisualisation(
 		onlineFilteredFiles.fraction.length,
 		onlineFilteredFiles.fractionOf.length,
@@ -103,6 +103,7 @@ const chooseYearRange = (startYear: number, endYear: number) => {
 
 const refreshYears = () => {
 	yearFilterInput.value = '';
+	clearYearFilter.classList.remove('active');
 	updateVisualisation(currentData.fraction.length, currentData.fractionOf.length);
 };
 
@@ -131,7 +132,6 @@ const validateUserFilter = (e: SubmitEvent) => {
 				throw new Error();
 			}
 		} catch {
-			console.log('error');
 			return;
 		}
 	}

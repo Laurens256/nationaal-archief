@@ -13,10 +13,10 @@ const yearRangeText = document.querySelector('.chosen-year-range') as HTMLElemen
 const updateVisualisation = (
 	fraction: number,
 	fractionOf: number,
-	yearRange?: { startYear: number, endYear: number }
+	yearRange?: { startYear: number; endYear: number }
 ) => {
 	// berekent online percentage, 0 als er geen files zijn of iets anders fout gaat
-	const percentage: number = Math.floor(((fraction / fractionOf) * 100)) || 0;
+	const percentage: number = Math.floor((fraction / fractionOf) * 100) || 0;
 
 	if (
 		onlineProgressBar &&
@@ -49,12 +49,12 @@ const updateVisualisation = (
 
 		if (yearRangeText && yearRange) {
 			if (yearRange.startYear === yearRange.endYear) {
-				yearRangeText.textContent = ` uit ${yearRange.startYear}`;
+				yearRangeText.innerHTML = ` uit <strong>${yearRange.startYear}</strong>`;
 			} else {
-				yearRangeText.textContent = ` tussen ${yearRange.startYear} - ${yearRange.endYear}`;
+				yearRangeText.innerHTML = ` tussen <strong>${yearRange.startYear} - ${yearRange.endYear}</strong>`;
 			}
 		} else if (yearRangeText) {
-			yearRangeText.textContent = '';
+			yearRangeText.innerHTML = '';
 		}
 
 		visualisationContainer.classList.add('data-loaded');
