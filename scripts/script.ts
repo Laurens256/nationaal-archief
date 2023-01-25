@@ -38,7 +38,7 @@ const buildArchiveLinks = () => {
 		linkSection.appendChild(anchorElement);
 	});
 };
-buildArchiveLinks();
+// buildArchiveLinks();
 document.querySelector(`._${archiveId.replace(/\./g, '')}`)?.classList.add('current');
 
 const getArchive = async () => {

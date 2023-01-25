@@ -77,7 +77,6 @@ section.visualisation-container > div:first-of-type > p {
 section.visualisation-container > div:first-of-type span.percentage-text {
 	font-size: 2em;
 	height: 100%;
-	display: inline-block;
 }
 
 section.visualisation-container > p {
@@ -271,6 +270,7 @@ div.bar-container div.offline-progress-bar span.icon {
 
 .clearyearfilter {
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath fill='%23fff' d='M18.816 5.43C16.418.44 10.148-1.371 5.262 1.176a.816.816 0 0 0 .766 1.441c4.081-2.12 9.288-.605 11.3 3.528 2.672 5.484-.773 9.668-3.57 11.214-3.801 2.114-8.625.711-10.93-2.886l2.832.59c.426.085.89-.168.977-.637.086-.422-.172-.89-.637-.977L.984 12.43c-.843-.081-1.023.68-.976.934l.637 5.059a.79.79 0 0 0 .808.723c.524 0 .848-.512.809-.977l-.246-2.063c2.343 2.891 6.957 5.36 12.554 2.786 2.375-1.223 7.825-6.032 4.246-13.461Zm0 0'/%3E%3C/svg%3E");
+	background-size: 65%;
 }
 div.bar-container div.online-progress-bar span.icon {
 	background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%20576%20512%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22576%22%20height%3D%22512%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20stroke%3D%22transparent%22%20stroke-width%3D%220%22%20style%3D%22%22%20d%3D%22M528 0H48C21.5 0 0 21.5 0 48v320c0 26.5 21.5 48 48 48h192l-16 48h-72c-13.3 0-24 10.7-24 24s10.7 24 24 24h272c13.3 0 24-10.7 24-24s-10.7-24-24-24h-72l-16-48h192c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zm-16 352H64V64h448v288z%22%20%2F%3E%3C%2Fsvg%3E');
